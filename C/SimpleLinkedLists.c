@@ -32,6 +32,11 @@ int main() {
 
     do {
         scanf("%d", &n);
+
+        if (n == 0){
+            break;
+        }
+        
         Node * newNode = createNode(n);
         newNode -> next = lastNode;
         lastNode = newNode;
