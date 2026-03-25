@@ -29,14 +29,49 @@ void traversePreOrderTree(TreeNode head) {
     traversePreOrderTree(head -> right);
 
 }
+void traverseInOrderTree(TreeNode head) {
 
-TreeNode createTree(int arr[], int size) {
+    if (head == NULL) {
+        return;
+    }
 
-    TreeNode head = createNode(arr[0]);
+    traversePreOrderTree(head -> left);
+    printf("%d -> ", head -> data);
+    traversePreOrderTree(head -> right);
+
+}
+void traversePostOrderTree(TreeNode head) {
+
+    if (head == NULL) {
+        return;
+    }
+
+    traversePreOrderTree(head -> left);
+    traversePreOrderTree(head -> right);
+    printf("%d -> ", head -> data);
+
+}
+
+void freeTree(TreeNode root) {
+
+    if (root == NULL) return ;
+
+    freeTree(root -> left);
+    freeTree(root -> right);
+    free(root);
+}
+
+void printTrees() {
+
+}
+
+TreeNode createTree(int * arr, int size) {
+
+    TreeNode root = createNode(arr[0]);
     
     for (int i = 1; i < size; i++) {
 
-        TreeNode temp = head;
+        TreeNode temp = root;
 
         while (true) {
 
@@ -57,22 +92,50 @@ TreeNode createTree(int arr[], int size) {
                     continue;
                 }
             }
+            break;
         }
 
 
     }
 
-    return head;
+    return root;
 }
 
+int * createArray(int sizeOfArray) {
+    int * arr = (int*) malloc(sizeOfArray * sizeof(int));
+
+    for (int i = 0; i < sizeOfArray; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    return arr;
+}
 
 int main() {
 
-    int arr[] = {7,2, 6, 8, 3, 9};
+    int numOfElement;
+    printf("No. of Elements: ");
+    scanf("%d", &numOfElement);
+    
+    printf("Enter elements sperated by space: ");
+    int * arr = createArray(numOfElement);
 
-    TreeNode tree1 = createTree(arr, sizeof(arr) / sizeof(int));
+    TreeNode tree1 = createTree(arr, numOfElement);
+    printf("PreOrder: ");
     traversePreOrderTree(tree1);
+    printf("NULL\n");
+    printf("InOrder: ");
+    traverseInOrderTree(tree1);
+    printf("NULL\n");
+    printf("PostOrder: ");
+    traversePostOrderTree(tree1);
+    printf("NULL\n");
 
+    freeTree(tree1);
+    free(arr);
+    
+    arr = NULL;
+    tree1 = NULL;
 
     return 0;
 }
